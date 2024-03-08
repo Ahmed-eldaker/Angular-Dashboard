@@ -1,0 +1,83 @@
+<div class="table-wrap border rounded rounded-2 position-relative">
+  <table class="table table-hover">
+    <thead class="table-header shadow shadow-sm">
+      <tr>
+        <th style="padding-left: 12px !important ; padding-right: 0 !important">
+          <input
+            class="form-check-input"
+            (click)="selectAll()"
+            type="checkbox"
+            [(ngModel)]="isAllSelected"
+          />
+        </th>
+        <th *ngIf="page === 'products'"></th>
+        <th *ngFor="let col of cols">{{ col.lable }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if(isLoading){
+      <div
+        class="spinner-border text-dark"
+        style="
+          width: 5rem;
+          height: 5rem;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+        "
+        role="status"
+      >
+        <span class="sr-only"></span>
+      </div>
+      }@else{
+
+      <tr (click)="navigateTo(row)" *ngFor="let row of data">
+        <td
+          style="padding-left: 12px !important ; padding-right: 0 !important"
+          (click)="stopPropegation(row, $event)"
+        >
+          <input
+            class="form-check-input"
+            (click)="selectElement(row, $event)"
+            [(ngModel)]="row.selected"
+            type="checkbox"
+          />
+        </td>
+        <td *ngIf="page === 'products'">
+          <div
+            [ngStyle]="{
+              'background-image': 'url(' + row.images[0].url + ')',
+              'background-size': 'cover',
+              width: '64px',
+              height: '64px'
+            }"
+          ></div>
+        </td>
+        <td style="vertical-align: middle" *ngFor="let col of cols">
+          <span
+            class="text-center"
+            style="padding: 2px 5px; border-radius: 4px"
+            [ngClass]="
+              row[col.colData] === 'Suspended'
+                ? 'bg-warning'
+                : row[col.colData] === 'Active' ||
+                  row[col.colData] === 'delivered'
+                ? 'bg-success text-white'
+                : row[col.colData] === 'pending' ||
+                  row[col.colData] === 'packaging'
+                ? 'bg-secondary text-white'
+                : row[col.colData] === 'canceled'
+                ? 'bg-danger text-white'
+                : row[col.colData] === 'shipping'
+                ? 'bg-primary text-white'
+                : ''
+            "
+          >
+            {{ row[col.colData] }}
+          </span>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

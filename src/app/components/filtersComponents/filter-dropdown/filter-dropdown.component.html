@@ -1,0 +1,14 @@
+<div class="mb-4">
+  <label [for]="id" class="form-label">{{ lable }}</label>
+  <select
+    [id]="id"
+    class="form-select"
+    [formControl]="control"
+    (ngModelChange)="onValueChange($event)"
+    aria-label="form-select example"
+    style="max-height: 200px; overflow: scroll"
+  >
+    <option disabled selected value="null">Choose value</option>
+    <option *ngFor="let item of items" [value]="item">{{ item }}</option>
+  </select>
+</div>

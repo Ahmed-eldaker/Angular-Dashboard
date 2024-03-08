@@ -1,0 +1,88 @@
+<div class="page d-flex gap-4">
+  <div class="table-wrap">
+    <app-table-controls
+      [resualtsCount]="usersCount"
+      [selectedItems]="selectedItems"
+      [dangerBtn]="'Delete'"
+      [warningBtn]="'Suspend'"
+      [itemsCount]="itemsCount"
+      pageName="users"
+      (pageEmitter)="getPage($event)"
+      (renderEmitter)="render($event)"
+    ></app-table-controls>
+    <app-table
+      (selectedEmiiter)="getSelected($event)"
+      [cols]="tableCols"
+      [page]="'users'"
+      [data]="users"
+    ></app-table>
+    <app-pagination
+      [pagesCount]="pagesCount"
+      [pageName]="'users'"
+      (pageEmitter)="getPage($event)"
+      class="mx-1"
+    ></app-pagination>
+  </div>
+  <div
+    class="offcanvas offcanvas-end"
+    tabindex="-1"
+    id="offcanvasRight"
+    aria-labelledby="offcanvasRightLabel"
+  >
+    <form [formGroup]="formGroup" (ngSubmit)="handelSubmit($event)">
+      <div class="offcanvas-body">
+        <div
+          class="w-100 overflow-scroll p-4 d-flex flex-column justify-content-between"
+        >
+          <h1 class="mb-5">Filters</h1>
+          <app-filter-text
+            [lable]="'Search'"
+            [type]="'text'"
+            [control]="formGroup.controls.search"
+          >
+          </app-filter-text>
+          <app-filter-dropdown
+            [id]="'genderField'"
+            [lable]="'Gender'"
+            [items]="['Male', 'Female']"
+            [control]="formGroup.controls.gender"
+          >
+          </app-filter-dropdown>
+          <app-filter-dropdown
+            [id]="'govField'"
+            [lable]="'governorates'"
+            [items]="governorates"
+            (dropdownEmmiter)="getSelectedGov($event)"
+            [control]="formGroup.controls.governorates"
+          >
+          </app-filter-dropdown>
+          <app-filter-dropdown
+            [id]="'cityField'"
+            [lable]="'City'"
+            [items]="selectedCities"
+            [control]="formGroup.controls.city"
+          >
+          </app-filter-dropdown>
+          <app-filter-dropdown
+            [id]="'sortField'"
+            [lable]="'Sort By'"
+            [items]="['Name', 'Email', 'Status', 'Orders']"
+            [control]="formGroup.controls.sortBy"
+          >
+          </app-filter-dropdown>
+          <app-filter-range
+            [allMax]="80"
+            [allMin]="10"
+            [lable]="'Age'"
+            [myStep]="1"
+            (valuesEmiter)="ageValues($event)"
+          >
+          </app-filter-range>
+          <button data-bs-dismiss="offcanvas" class="btn btn-dark w-100">
+            Apply
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

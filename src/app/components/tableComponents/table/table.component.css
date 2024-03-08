@@ -1,0 +1,26 @@
+.table-wrap {
+  height: calc(100% - 140px);
+  overflow-y: scroll;
+}
+
+.table-header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+}
+
+td,
+th {
+  padding: 16px !important;
+  text-align: start;
+}
+
+td {
+  cursor: pointer;
+}
+
+th input,
+td input {
+  cursor: pointer;
+}
